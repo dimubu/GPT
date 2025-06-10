@@ -27,7 +27,17 @@ def main():
 
     # Nome do arquivo de saída com contador de arquivos no nome
     data_hoje = datetime.now().strftime("%d-%m-%y")
-    output_dir = r"C:\\Users\\DBUENO\\OneDrive\\Desktop\\RELATORIOS"
+
+    messagebox.showinfo(
+        "Selecionar Pasta de Saída",
+        "Escolha a pasta onde o relatório será salvo",
+    )
+    output_dir = filedialog.askdirectory(title="Selecione a pasta de destino")
+
+    if not output_dir:
+        messagebox.showerror("Erro", "Nenhuma pasta selecionada.")
+        return
+
     os.makedirs(output_dir, exist_ok=True)
 
     # Cabeçalhos padrão das planilhas
@@ -117,4 +127,4 @@ def main():
         df_box.to_excel(writer, sheet_name="BOX", index=False)
         df_bau.to_excel(writer, sheet_name="BAU", index=False)
 
-    messagebox.showinfo("Sucesso", f"Arquivo gerado com sucesso:\n{nome_saida}")
+    messagebox.showinfo("Sucesso", f"Relatório gerado na pasta:\n{output_dir}")
